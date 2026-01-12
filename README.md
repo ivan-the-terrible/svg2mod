@@ -28,10 +28,7 @@ output in KiCad's legacy or s-expression (i.e., pretty) formats.
 
 ### Don't want to install the application?
 
-You can use a 3rd party web application instead:
-
-- [svg2mod.streamlitapp.com](https://inputblackboxoutput-streamlit-svg2mod-app-fszqih.streamlitapp.com/)
-- [svg2mod.com](https://svg2mod.com/)
+Within the `www` directory download the `index.html` and `app.js` files and launching the `index.html` file with any browser (or clone the repo and do the same locally). The logic just runs svg2mod via WebAssembly.
 
 ## Showcase
 

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>SVG to KiCad Converter</title>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: normal;
+      color: #7f8c8d;
+      margin-bottom: 1.5rem;
+    }
+
+    h3 {
+      color: #34495e;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    input[type="file"] {
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      border: 2px dashed #bdc3c7;
+      border-radius: 4px;
+      background: white;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      transition: background 0.3s;
+    }
+
+    button:hover:not(:disabled) {
+      background: #2980b9;
+    }
+
+    button:disabled {
+      background: #95a5a6;
+      cursor: not-allowed;
+      opacity: 0.6;
+      filter: grayscale(0.5);
+    }
+
+    div {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: inline-block;
+      margin-bottom: 0.25rem;
+      color: #555;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      width: 200px;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #3498db;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    br+br {
+      display: block;
+      content: "";
+      margin-top: 0.5rem;
+    }
+
+    #errorDiv {
+      margin-bottom: 1.5rem;
+      border: 1px solid #e74c3c;
+      background: #fdecea;
+    }
+
+    #errorOutput {
+      height: 150px;
+      overflow-y: auto;
+      padding: 1rem;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    #outputDiv {
+      margin-bottom: 2rem;
+      border: 1px solid #2ecc71;
+      background: #eafaf1;
+    }
+
+    #outputLog {
+      height: 200px;
+      overflow-y: auto;
+      padding: 1rem;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>SVG to KiCad (.mod) Converter</h1>
+  <h2 id="status">Status: Initializing...</h2>
+  <input type="file" id="svgInput" accept=".svg">
+  <button id="convertBtn" disabled>Run svg2mod</button>
+
+  <div id="errorDiv" hidden>
+    <h3>Error Messages:</h3>
+    <pre id="errorOutput" style="color: red; white-space: pre-wrap;"></pre>
+  </div>
+
+  <div id="outputDiv">
+    <h3>Output:</h3>
+    <pre id="outputLog" style="white-space: pre-wrap;"></pre>
+  </div>
+
+  <div>
+    <h3>Optional Parameters</h3>
+
+    <label for="output">Output Module Name (default svg2mod): </label>
+    <input type="text" id="output" placeholder="svg2mod"><br><br>
+
+    <label for="moduleValue">Module Value (default G***): </label>
+    <input type="text" id="moduleValue" placeholder="G***"><br><br>
+
+    <label for="scale">Scaling Factor (default 1.0): </label>
+    <input type="number" id="scale" step="0.1" value="1.0"><br><br>
+
+    <label for="precision">Precision (default 5): </label>
+    <input type="number" id="precision" value="5"><br><br>
+
+    <label for="dpi">DPI (default 96): </label>
+    <input type="number" id="dpi" value="96"><br><br>
+
+    <label for="center">Center the module to the center of the bounding box (default false): </label>
+    <input type="checkbox" id="center"><br><br>
+
+    <label for="excludeHidden">Do not export hidden objects (default false): </label>
+    <input type="checkbox" id="excludeHidden"><br><br>
+
+    <label for="convertPads">Convert any artwork on Cu layers to pads (default false): </label>
+    <input type="checkbox" id="convertPads"><br><br>
+
+    <label for="forceLayer">Force everything into the single provided layer (default none): </label>
+    <input type="text" id="forceLayer"><br><br>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

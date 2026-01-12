@@ -19,19 +19,19 @@ output in KiCad's legacy or s-expression (i.e., pretty) formats.
 
 ## Requirements
 
-* Python 3
-* [fonttools](https://pypi.org/project/fonttools/)
+- Python 3
+- [fonttools](https://pypi.org/project/fonttools/)
 
 ## Installation
 
-```pip install svg2mod```
+`pip install svg2mod`
 
 ### Don't want to install the application?
 
 You can use a 3rd party web application instead:
 
-* [svg2mod.streamlitapp.com](https://inputblackboxoutput-streamlit-svg2mod-app-fszqih.streamlitapp.com/)
-* [svg2mod.com](https://svg2mod.com/)
+- [svg2mod.streamlitapp.com](https://inputblackboxoutput-streamlit-svg2mod-app-fszqih.streamlitapp.com/)
+- [svg2mod.com](https://svg2mod.com/)
 
 ## Showcase
 
@@ -44,7 +44,7 @@ If you have a project you are proud of please post about it on our
 
 ## Example
 
-```svg2mod input.svg```
+`svg2mod input.svg`
 
 ## Usage
 
@@ -98,53 +98,54 @@ optional arguments:
 svg2mod expects images saved in the uncompressed Inkscape SVG (i.e., not "plain SVG") format. This
 is so it can associate inkscape layers with kicad layers
 
-* Drawings should be to scale (1 mm in Inkscape will be 1 mm in KiCad).  Use the --factor option to
-resize the resulting module(s) up or down from there.
+- Drawings should be to scale (1 mm in Inkscape will be 1 mm in KiCad). Use the --factor option to
+  resize the resulting module(s) up or down from there.
 
-* Most elements are fully supported.
-  * A path may have an outline and a fill.  (Colors will be ignored.)
-  * A path may have holes, defined by interior segments within the path (see included examples).
-  * 100% Transparent fills and strokes with be ignored.
-  * Text Elements are partially supported
-* Groups may be used. Styles applied to groups (e.g., stroke-width) are applied to contained drawing
+- Most elements are fully supported.
+  - A path may have an outline and a fill. (Colors will be ignored.)
+  - A path may have holes, defined by interior segments within the path (see included examples).
+  - 100% Transparent fills and strokes with be ignored.
+  - Text Elements are partially supported
+- Groups may be used. Styles applied to groups (e.g., stroke-width) are applied to contained drawing
   elements.
 
-* Layers or items must be named to match the target in kicad. The supported layers are listed below.
+- Layers or items must be named to match the target in kicad. The supported layers are listed below.
   They will be ignored otherwise.
-  * These are pulled from `inkscape:label` but will pull from `id` if the label isn't set.
 
-* __If there is an issue parsing an inkscape object or stroke convert it to a path.__
-  * __Use Inkscape's "Path->Object To Path" and "Path->Stroke To Path" menu options to convert these__
-    __elements into paths that will work.__
+  - These are pulled from `inkscape:label` but will pull from `id` if the label isn't set.
+
+- **If there is an issue parsing an inkscape object or stroke convert it to a path.**
+  - **Use Inkscape's "Path->Object To Path" and "Path->Stroke To Path" menu options to convert these**
+    **elements into paths that will work.**
 
 ### Layers
 
 This supports the layers listed below. They are the same in inkscape and kicad:
 
-| KiCad layer(s)       | KiCad legacy | KiCad pretty |
-|:--------------------:|:------------:|:------------:|
-| F.Cu [^1]            | Yes          | Yes          |
-| B.Cu [^1]            | Yes          | Yes          |
-| F.Adhes              | Yes          | Yes          |
-| B.Adhes              | Yes          | Yes          |
-| F.Paste              | Yes          | Yes          |
-| B.Paste              | Yes          | Yes          |
-| F.SilkS              | Yes          | Yes          |
-| B.SilkS              | Yes          | Yes          |
-| F.Mask               | Yes          | Yes          |
-| B.Mask               | Yes          | Yes          |
-| Dwgs.User            | Yes          | Yes          |
-| Cmts.User            | Yes          | Yes          |
-| Eco1.User            | Yes          | Yes          |
-| Eco2.User            | Yes          | Yes          |
-| Edge.Cuts            | Yes          | Yes          |
-| F.Fab                | --           | Yes          |
-| B.Fab                | --           | Yes          |
-| F.CrtYd              | --           | Yes          |
-| B.CrtYd              | --           | Yes          |
-| Drill.Cu [^1] [^2]   | --           | Yes          |
-| Drill.Mech [^1] [^2] | --           | Yes          |
-| *.Keepout [^1] [^4]  | --           | Yes [^3]     |
+|    KiCad layer(s)    | KiCad legacy | KiCad pretty |
+| :------------------: | :----------: | :----------: |
+|      F.Cu [^1]       |     Yes      |     Yes      |
+|      B.Cu [^1]       |     Yes      |     Yes      |
+|       F.Adhes        |     Yes      |     Yes      |
+|       B.Adhes        |     Yes      |     Yes      |
+|       F.Paste        |     Yes      |     Yes      |
+|       B.Paste        |     Yes      |     Yes      |
+|       F.SilkS        |     Yes      |     Yes      |
+|       B.SilkS        |     Yes      |     Yes      |
+|        F.Mask        |     Yes      |     Yes      |
+|        B.Mask        |     Yes      |     Yes      |
+|      Dwgs.User       |     Yes      |     Yes      |
+|      Cmts.User       |     Yes      |     Yes      |
+|      Eco1.User       |     Yes      |     Yes      |
+|      Eco2.User       |     Yes      |     Yes      |
+|      Edge.Cuts       |     Yes      |     Yes      |
+|        F.Fab         |      --      |     Yes      |
+|        B.Fab         |      --      |     Yes      |
+|       F.CrtYd        |      --      |     Yes      |
+|       B.CrtYd        |      --      |     Yes      |
+|  Drill.Cu [^1] [^2]  |      --      |     Yes      |
+| Drill.Mech [^1] [^2] |      --      |     Yes      |
+| \*.Keepout [^1] [^4] |      --      |   Yes [^3]   |
 
 Note: If you have a layer `F.Cu`, all of its sub-layers will be treated as `F.Cu` regardless of their
 names.
@@ -164,35 +165,32 @@ Ex: `F.Cu:pad;...`
 
 Supported Arguments:
 
-* Pad
-  
+- Pad
+
   Any copper layer can have the pad specified.
   The pad option can be used solo (`F.Cu:Pad`) or it can also have it's own arguments.
   The arguments are:
 
-  * Number
+  - Number
     If it is set it will specify the number of the pad. Ex: `Pad:1`
 
-  * Paste _(Not available for `Drill.Cu`)_
-  * Mask _(Not available for `Drill.Cu`)_
+  - Paste _(Not available for `Drill.Cu`)_
+  - Mask _(Not available for `Drill.Cu`)_
 
-* Allowed
-  
+- Allowed
+
   Keepout areas will prevent anything from being placed inside them.
   To allow some things to be placed inside the keepout zone a comma
   separated list of any of the following options can be used:
   `tracks`,`vias`,`pads`,`copperpour`,`footprints`
-  
-* Hatch
+
+- Hatch
 
   Keepout areas have different hatching styles. This allows customization
   of the appearance of hatching when converting from an svg, Ex: `F.Keepout:Hatch:edge`.
   All available hatch options are `none`, `edge`, `full`.
-  
+
 [^1]: These layers can have arguments when svg2mod is in pretty mode
-
 [^2]: Drills can only be svg circle objects. The stroke width in `Drill.Cu` is the pad size and the fill is the drill size.
-
 [^3]: Only works in Kicad versions >= v6 (`--format latest`).
-
 [^4]: The \* can be { \*, F, B, I } or any combination like FB or BI. These options are for Front, Back, and Internal.
